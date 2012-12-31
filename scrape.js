@@ -32,6 +32,11 @@ function buildIndex() {
 
   for (year in index[court]) {
     var url = BAILII + court + '/' + year + '/';
+    getInfo(url, court, year);
+  }
+
+  // split out to avoid scoping issues
+  function getInfo(url, court, year) {
     request(url, function(error, response, body) {
       console.log('Processing court ' + court + ' for year: ' + year);
       $ = cheerio.load(body);

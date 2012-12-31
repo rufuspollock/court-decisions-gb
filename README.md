@@ -1,4 +1,4 @@
-Scraping UK court judgments from BAILII.
+UK court judgments.
 
 ## Installation
 
