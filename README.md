@@ -1,4 +1,4 @@
-UK court judgments.
+UK court decisions (judgments).
 
 ## Installation
 

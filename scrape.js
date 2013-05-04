@@ -56,14 +56,29 @@ function buildIndex() {
         var _content = $a.html();
         var _parts = _content.split(' <a');
         data.title = _parts[0];
-        var rawdate = _parts[1].split('</a> (').reverse()[0].replace(')', '').replace(',', '').replace('th', '').replace('rd', '').replace('st', '');
+        var _datepart = _parts[1]
+          // fix up
+          .replace('(Comm</a> )', '(Comm)</a>')
+          .split('</a> (')
+          .reverse()[0];
+        var rawdate = _datepart.replace(')', '')
+          .replace(',', '')
+          .replace('th', '')
+          .replace('rd', '')
+          .replace('st', '')
+          .replace('nd', '')
+          // fix for typo
+          .replace('Before:', '')
+          ;
         try {
           data.date = new Date(rawdate).toISOString().slice(0, 10);
         } catch(e) {
           console.log(_content);
+          console.log(_datepart);
           console.log(rawdate);
         }
         data.id = [data.court, data.division, data.year, data.number].join('-');
+        data.id = data.id.toLowerCase();
         index.push(data);
         cb();
       });
@@ -73,7 +88,7 @@ function buildIndex() {
   function save(data) {
     csv()
       .from(data)
-      .to.path('data/cases.csv', {columns: headers, header: true} )
+      .to.path('data/decisions.csv', {columns: headers, header: true} )
       ;
   }
 }
