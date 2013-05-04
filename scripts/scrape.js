@@ -116,22 +116,24 @@ function buildIndex() {
     // have to be quite careful e.g. here we have an intial (...) ending with digits but not a date
     // HLB Kidsons (a firm) v Lloyds Underwriters (Policy No 621/PKID00101) & Ors <a title="Link to BAILII version" href="/ew/cases/EWHC/Comm/2007/2699.html">[2007] EWHC 2699 (Comm)</a> (22 November 2007)
     var _datepart = _content.match(/\([^()]+\d\d\d\d[\)$]/g);
-    if (_datepart != null) {
-      _datepart = _datepart[_datepart.length-1];
-      _datepart = _datepart.replace('(', '')
-        .replace(')', '')
-        .replace(',', '')
-        .replace('th', '')
-        .replace('h', '')
-        .replace('rd', '')
-        .replace('st', '')
-        .replace('nd', '')
-        // fix for typo
-        .replace('Before:', '')
-        ;
-    }
     try {
-      data.date = new Date(_datepart).toISOString().slice(0, 10);
+      if (_datepart === null) {
+        throw 'Failed to locate date';
+      } else {
+        _datepart = _datepart[_datepart.length-1];
+        _datepart = _datepart.replace('(', '')
+          .replace(')', '')
+          .replace(',', '')
+          .replace('th', '')
+          .replace('h', '')
+          .replace('rd', '')
+          .replace('st', '')
+          .replace('nd', '')
+          // fix for typo
+          .replace('Before:', '')
+          ;
+        data.date = new Date(_datepart).toISOString().slice(0, 10);
+      }
     } catch(e) {
       console.log(e.toString());
       console.log(_content);
