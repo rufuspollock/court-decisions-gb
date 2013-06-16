@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title> 
+    Judgments - UK Court Decisions
+  </title>
+  <meta name="author" content="Open Knowledge Foundation">
+  <meta name="description" content="">
+
+  <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="http://okfnlabs.org/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="http://okfnlabs.org/css/bootstrap-responsive.css" rel="stylesheet" />
+  <link href="http://okfnlabs.org/css/labs.css" rel="stylesheet" />
+
+  <!-- okf ribbon -->
+  <link rel="stylesheet" href="http://assets.okfn.org/themes/okfn/okf-panel.css"/>
+</head>
+<body>
+<!-- OKF Panel -->
+<div class="absolute-okf-panel">
+  <div id="okf-panel" class="collapse">
+    <iframe src="http://assets.okfn.org/themes/okfn/okf-panel.html" scrolling="no"></iframe>
+  </div>
+  <div class="container">
+    <div class="okfn-ribbon">
+      <a href="http://okfn.org/" data-toggle="collapse" data-target="#okf-panel" title="Open Knowledge Foundation Labs">An Open Knowledge Foundation Site</a>
+    </div>
+  </div>
+</div>
+<!-- End OKF Panel -->
+
+<div class="container">
+
+<div class="content">
+  <div class="page-header">
+    <h1>
+      Judgments - UK Court Decisions
+    </h1>
+  </div>
+  <div class="row">
+    <div class="span8">
+      <div class="loading">Loading <img src="http://assets/images/icons/ajaxload-circle.gif" /></div>
+      <p>Searching <span class="fulltotal">...</span> judgments.</p>
+
+      <form class="form js-search">
+        <input type="text" class="input-large search-query" placeholder="Search ..." />
+        <button type="submit" class="btn">Search</button>
+      </form>
+
+      <div class="results"></div>
+    </div>
+    <div class="span4">
+      <h3>Current Limitations</h3>
+      <p>We are currently limiting search to the High Court Commercial and Chancery Division only (~5k out of the total 30k decisions available). This is due to the limitations of the in-browser search using <a href="http://lunrjs.com/">lunrjs</a>. </p>
+
+      <h3>Download the raw data</h3>
+      <p>Download the <a href="data/decisions.csv">full list of all decisions (CSV)</a> (approximately 33k decisions). Data includes title, date, court division, and link to text on BAILII.</p>
+
+      <h3>Project on Github</h3>
+      <p>Data, scripts and code for this site are all kept in <a href="https://github.com/rgrp/court-decisions-gb">GB Court Decisions repository on Github</a></p>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+  <footer>
+    <p>
+      This service is run by the <a href="http://okfn.org">Open
+        Knowledge Foundation</a>
+      &ndash;
+      <a href="http://github.com/rgrp/">Source Code</a>
+      &ndash;
+      <a href="https://twitter.com/okfnlabs" title="Open Knowledge Foundation Labs on Twitter">@okfnlabs</a>
+    </p>
+    <p>
+      <a href="http://opendefinition.org/okd/" title="Open Data">
+        <img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" alt="" border="" /></a>
+      <a href="http://opendefinition.org/ossd/" title="Open Online Software Service">
+        <img src="http://assets.okfn.org/images/ok_buttons/os_80x15_orange_grey.png" alt="" border="" />
+      </a>
+    </p>
+  </footer>
+</div><!-- /container -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/1.2.1/lodash.min.js"></script>
+<script type="text/javascript" src="http://okfnlabs.org/recline/src/backend.csv.js"></script>
+<script type="text/javascript" src="app/vendor/lunr.js"></script>
+<script type="text/javascript" src="app/app.js"></script>
+</body>
+</html>
+
