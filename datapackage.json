@@ -1,0 +1,55 @@
+{
+  "name": "court-decisions-gb",
+  "title": "Database of United Kingdom Judicial Decisions",
+  "homepage": "",
+  "version": "0.1.0",
+  "license": "ODC-PDDL-1.0",
+  "repository": "git://github.com/rgrp/court-decisions-gb.git",
+  "resources": [
+    {
+      "name": "decisions",
+      "path": "data/decisions.csv",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "schema": {
+        "fields": [
+          {
+            "name": "court",
+            "type": "string",
+            "description": "Court (Group) Code. EWHC = England and Wales High Court, EWCA = England and Wales Court of Appeal"
+          },
+          {
+            "name": "division",
+            "type": "string",
+            "description": "Division within the court. See README for details."
+          },
+          {
+            "name": "year",
+            "type": "integer",
+            "description": "The year the decision was published"
+          },
+          {
+            "name": "number",
+            "type": "integer",
+            "description": "BAILII number"
+          },
+          {
+            "name": "date",
+            "type": "date",
+            "description": "Date the decision was published"
+          },
+          {
+            "name": "url",
+            "type": "string",
+            "description": "Offset url to decision on BAILII website. You will need to pre-prend http://www.bailii.org/ to get the full URL."
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "description": "Official title of the decision"
+          }
+        ]
+      }
+    }
+  ]
+}
