@@ -30,8 +30,8 @@
           },
           {
             "name": "number",
-            "type": "integer",
-            "description": "BAILII number"
+            "type": "string",
+            "description": "BAILII number. Whilst most values are actual integers like '567'occassionally we have values like 'B1' or '407_2'"
           },
           {
             "name": "date",
