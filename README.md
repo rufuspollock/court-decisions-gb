@@ -1,7 +1,7 @@
-Database of United Kingdom case law. That is a database of judicial decisions
--- aka judgments - made in the various crown courts of England Wales. It
-includes judgements of all divisions of the High Court, the Court of Appeal and
-the Supreme Court (previously the House of Lords).
+Database of judicial decisions -- aka judgments - made in the various crown
+courts of England and Wales. It includes judgements of all divisions of the High
+Court, the Court of Appeal and the Supreme Court (previously the House of
+Lords).
 
 ## Data
 
