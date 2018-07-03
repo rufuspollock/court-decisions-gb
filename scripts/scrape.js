@@ -1,4 +1,4 @@
-var fs = require('fs');
+s = require('fs');
 
 var request = require('request');
 var cheerio = require('cheerio');
@@ -114,8 +114,13 @@ function buildIndex() {
       .replace(/^\s+|\s+$/g, '');
 
     // have to be quite careful e.g. here we have an intial (...) ending with digits but not a date
-    // HLB Kidsons (a firm) v Lloyds Underwriters (Policy No 621/PKID00101) & Ors <a title="Link to BAILII version" href="/ew/cases/EWHC/Comm/2007/2699.html">[2007] EWHC 2699 (Comm)</a> (22 November 2007)
-    var _datepart = _content.match(/\([^()]+\d\d\d\d[\)$]/g);
+      // HLB Kidsons (a firm) v Lloyds Underwriters (Policy No 621/PKID00101) & Ors <a title="Link to BAILII version" href="/ew/cases/EWHC/Comm/2007/2699.html">[2007] EWHC 2699 (Comm)</a> (22 November 2007)
+      // Try parent <li> first, then within <a> as fallback
+      a_li_data = ($a).parent().html().split(">").pop();
+      var _datepart = a_li_data.match(/\([^()]+\d\d\d\d[\)$]/g);
+      if (_datepart == null) {
+	  _datepart = _content.match(/\([^()]+\d\d\d\d[\)$]/g);
+      }
     try {
       if (_datepart === null) {
         throw 'Failed to locate date';
