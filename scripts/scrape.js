@@ -1,4 +1,4 @@
-var fs = require('fs');
+s = require('fs');
 
 var request = require('request');
 var cheerio = require('cheerio');
@@ -6,7 +6,7 @@ var csv = require('csv');
 var async = require('async');
 
 var ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17';
-var BAILII = 'http://www.bailii.org/ew/cases/';
+var BAILII = 'http://www.bailii.org/';
 
 // URL structure
 // 
@@ -31,21 +31,23 @@ var headers = [ 'court', 'division', 'year', 'number', 'date', 'url', 'title' ];
 // [ 'EWHC/COP', 'England and Wales', 'High Court', 'Court of Protection' ],
 var courts = {
   fields: [ 'id', 'region', 'court', 'division' ],
-  records: [
-    [ 'EWCA/Civ', 'England and Wales', 'Court of Appeal', 'Civil Division' ],
-    [ 'EWCA/Crim', 'England and Wales', 'Court of Appeal', 'Criminal Division' ],
-    [ 'EWHC/Admin', 'England and Wales', 'High Court', 'Administrative Court' ],
-    [ 'EWHC/Admlty', 'England and Wales', 'High Court', 'Admiralty Division' ],
-    [ 'EWHC/Ch', 'England and Wales', 'High Court', 'Chancery Division' ],
-    [ 'EWHC/Comm', 'England and Wales', 'High Court', 'Commercial Court' ],
-    [ 'EWHC/Costs', 'England and Wales', 'High Court', 'Senior Court Costs Office' ],
-    [ 'EWHC/Exch', 'England and Wales', 'High Court', 'Exchequer Court' ],
-    [ 'EWHC/KB', 'England and Wales', 'High Court', 'King\'s Bench Division' ],
-    [ 'EWHC/Mercantile', 'England and Wales', 'High Court', 'Mercantile Court' ],
-    [ 'EWHC/Patents', 'England and Wales', 'High Court', 'Patents Court' ],
-    [ 'EWHC/QB', 'England and Wales', 'High Court', 'Queen\'s Bench Division' ],
-    [ 'EWHC/TCC', 'England and Wales', 'High Court', 'Technology and Construction Court' ],
-    [ 'EWPCC', 'England and Wales', 'Patents County Court', '' ]
+    records: [
+    [ 'EWCA/Civ', 'England and Wales', 'Court of Appeal', 'Civil Division', 'ew' ],
+    [ 'EWCA/Crim', 'England and Wales', 'Court of Appeal', 'Criminal Division', 'ew' ],
+    [ 'EWHC/Admin', 'England and Wales', 'High Court', 'Administrative Court', 'ew' ],
+    [ 'EWHC/Admlty', 'England and Wales', 'High Court', 'Admiralty Division', 'ew' ],
+    [ 'EWHC/Ch', 'England and Wales', 'High Court', 'Chancery Division', 'ew' ],
+    [ 'EWHC/Comm', 'England and Wales', 'High Court', 'Commercial Court', 'ew' ],
+    [ 'EWHC/Costs', 'England and Wales', 'High Court', 'Senior Court Costs Office', 'ew' ],
+    [ 'EWHC/Exch', 'England and Wales', 'High Court', 'Exchequer Court', 'ew' ],
+    [ 'EWHC/KB', 'England and Wales', 'High Court', 'King\'s Bench Division', 'ew' ],
+    [ 'EWHC/Mercantile', 'England and Wales', 'High Court', 'Mercantile Court', 'ew' ],
+    [ 'EWHC/Patents', 'England and Wales', 'High Court', 'Patents Court', 'ew' ],
+    [ 'EWHC/QB', 'England and Wales', 'High Court', 'Queen\'s Bench Division', 'ew' ],
+    [ 'EWHC/TCC', 'England and Wales', 'High Court', 'Technology and Construction Court', 'ew' ],
+    [ 'EWPCC', 'England and Wales', 'Patents County Court', '', 'ew' ],
+    [ 'UKSC', 'United Kingdom', 'Supreme Court', '', 'uk'],
+    [ 'UKHL', 'United Kingdom', 'House of Lords', '', 'uk'],
   ]
 };
 
@@ -58,8 +60,9 @@ function buildIndex() {
   // let's build the list of index pages to scrape
   // Note that some courts have much older decisions (e.g. from 1800s)
   courts.records.forEach(function(court) {
-    for (year=1990;year<=2013;year++) {
-      var url = BAILII + court[0] + '/' + year + '/';
+    for (year=1990;year<=2018;year++) {
+      var url = BAILII + court[4] + '/cases/' + court[0] + '/' + year + '/';
+        console.log(url);
       pages.push({url: url, court: court[0], year: year});
     }
   });
@@ -114,8 +117,13 @@ function buildIndex() {
       .replace(/^\s+|\s+$/g, '');
 
     // have to be quite careful e.g. here we have an intial (...) ending with digits but not a date
-    // HLB Kidsons (a firm) v Lloyds Underwriters (Policy No 621/PKID00101) & Ors <a title="Link to BAILII version" href="/ew/cases/EWHC/Comm/2007/2699.html">[2007] EWHC 2699 (Comm)</a> (22 November 2007)
-    var _datepart = _content.match(/\([^()]+\d\d\d\d[\)$]/g);
+      // HLB Kidsons (a firm) v Lloyds Underwriters (Policy No 621/PKID00101) & Ors <a title="Link to BAILII version" href="/ew/cases/EWHC/Comm/2007/2699.html">[2007] EWHC 2699 (Comm)</a> (22 November 2007)
+      // Try parent <li> first, then within <a> as fallback
+      a_li_data = ($a).parent().html().split(">").pop();
+      var _datepart = a_li_data.match(/\([^()]+\d\d\d\d[\)$]/g);
+      if (_datepart == null) {
+	  _datepart = _content.match(/\([^()]+\d\d\d\d[\)$]/g);
+      }
     try {
       if (_datepart === null) {
         throw 'Failed to locate date';

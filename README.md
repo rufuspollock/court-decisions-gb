@@ -34,6 +34,8 @@ Courts covered:
 [ 'EWHC/QB', 'England and Wales', 'High Court', 'Queen\'s Bench Division' ],
 [ 'EWHC/TCC', 'England and Wales', 'High Court', 'Technology and Construction Court' ],
 [ 'EWPCC', 'England and Wales', 'Patents County Court', '' ]
+[ 'UKSC', 'United Kingdom', 'Supreme Court', ''],
+[ 'UKHL', 'United Kingdom', 'House of Lords', ''],
 ```
 
 We currently exclude the following courts to reduce issues with personal
